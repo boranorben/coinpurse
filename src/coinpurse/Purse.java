@@ -69,8 +69,6 @@ public class Purse {
      *  @return true if purse is full.
      */
     public boolean isFull() {
-        //TODO complete this method
-        //TODO Don't Repeat Yourself: Avoid writing duplicate code.
     	if(this.count() == this.capacity) return true;
         return false;
     }
@@ -84,7 +82,6 @@ public class Purse {
      */
     public boolean insert( Coin coin ) {
         // if the purse is already full then can't insert anything.
-        //TODO complete the insert method
     	if (!isFull() && coin.getValue() > 0) {
     		money.add(coin);
     		Collections.sort(money);
