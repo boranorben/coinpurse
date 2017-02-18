@@ -4,7 +4,7 @@ package coinpurse;
  * Coin represents coinage (money) with a fixed value and currency.
  * @author Issaree Srisomboon
  */
-public class Coin implements Comparable<Coin>{
+public class Coin implements Comparable<Coin>,Valuable{
 	public static final String DEFAULT_CURRENCY = "Baht";
     /** Value of the coin. */
     private final double value;
@@ -34,13 +34,13 @@ public class Coin implements Comparable<Coin>{
      * Get the valuable of coin.
      * @return the valuable of coin.
      */
-    public double getValue( ) {
+    public double getValue() {
     	return this.value;
     } 
 
     /**
-     * Get the currency.
-     * @return currency.
+     * Get the currency of coin.
+     * @return currency of coin.
      */
     public String getCurrency() {
     	return this.currency;
