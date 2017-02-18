@@ -1,12 +1,7 @@
 # CoinPurse by Issaree Srisomboon
 # Description of coinpurse
 CoinPurse is an object that users can insert coins in the purse and also withdraw from its conditionally.
-
-In Coin class, it represents coinage (money) with a fixed value and currency.
-
-In Purse class, it is reponsible for insert coins, withdraw money, check the balance and check if the purse is full.
-
-In Main class, it will ask users to deposit, withdraw, inquiry or quit.
+There are 7 classes in this project are Coin, Banknote, Purse, CoinUtil, ConsoleDialog, Main and Valuable.
 ## Example methods in Purse class
 | Method | Short Description |
 | :----------------------: | :-----------------:
@@ -34,4 +29,4 @@ There are 3 example methods in this class,
 
 *Sum coins by currency and print the sum for each currency.*
 - **Input**: 0.25-Baht 2.00-Baht 1.00-Ringgit 0.50-Rupee 0.50-Rupee 5.00-Ringgit 2.00-Ringgit 5.00-Baht 10.00-Baht 10.00-Rupee 50.00-Ringgit 1.00-Rupee 10.00-Baht 1.00-Baht
-- **Output**: 28.25 Baht 58.0 Ringgit
+- **Output**: 28.25-Baht 12.0-Rupee 58.0-Ringgit
