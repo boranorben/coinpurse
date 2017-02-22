@@ -2,7 +2,6 @@ package coinpurse;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -135,23 +134,5 @@ public class Purse {
     public String toString() {
     	return String.format("%d coins with value %.1f",this.count(),getBalance());
     }
-
-//    public static void main(String[] arg) {
-//    	  Purse purse = new Purse(3);
-//    	  System.out.println(purse.getBalance());
-//    	  System.out.println(purse.count());
-//    	  System.out.println(purse.isFull());
-//    	  System.out.println(purse.insert(new Coin(5)));
-//    	  System.out.println(purse.insert(new Coin(10)));
-//    	  System.out.println(purse.insert(new Coin(0)));
-//    	  System.out.println(purse.insert(new Coin(1)));
-//    	  System.out.println(purse.insert(new Coin(5)));
-//    	  System.out.println(purse.count());
-//    	  System.out.println(purse.isFull());
-//    	  System.out.println(purse.getBalance());
-//    	  System.out.println(purse.toString());
-//    	  System.out.println(purse.withdraw(12));
-//    	  System.out.println(Arrays.toString(purse.withdraw(11)));
-//    }
     
 }

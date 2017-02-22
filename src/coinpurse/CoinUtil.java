@@ -1,10 +1,6 @@
 package coinpurse;
 
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import org.omg.CORBA.portable.ValueBase;
 
 /**
  * Some Coin utility methods for practice using Lists and Comparator.
@@ -54,7 +50,6 @@ public class CoinUtil {
 	public static void sumByCurrency(List<Valuable> value) {
 		Map<String,Double> map = new HashMap<String, Double>();
 		Iterator<Valuable> iterator = value.iterator();
-		int sum=0;
 		while (iterator.hasNext()) {
 			Valuable valuable = iterator.next();
 			if (map.containsKey(valuable.getCurrency())) {	
