@@ -7,6 +7,7 @@ package coinpurse;
  */
 public class BankNote implements Valuable{
 	private static long nextSerialNumber = 1000000;
+	private static final String DEFAULT_CURRENCY = "Baht";
 	private double value;
 	private String currency;
 	private long serialNumber;
@@ -15,9 +16,8 @@ public class BankNote implements Valuable{
      * A bank note with given value using the default currency.
      * @param value of bank note.
      */
-	public BankNote(double value) {
-		this.value = value;
-		this.currency = "Baht";
+	public BankNote( double value ) {
+		this( value,DEFAULT_CURRENCY );
 	}
 	
 	/**
@@ -25,7 +25,7 @@ public class BankNote implements Valuable{
      * @param value of bank note.
      * @param currency of bank note.
      */
-	public BankNote(double value,String currency) {
+	public BankNote( double value,String currency ) {
 		this.value = value;
 		this.currency = currency;
 	}
@@ -61,11 +61,11 @@ public class BankNote implements Valuable{
      * or is not in the same class. 
      */
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) return false;
-    	if (obj.getClass() != this.getClass()) return false;
+	public boolean equals( Object obj ) {
+		if ( obj == null ) return false;
+    	if ( obj.getClass() != this.getClass() ) return false;
     	Coin other = (Coin) obj;
-    	if (other.getValue() == this.value && other.getCurrency() == this.currency) {
+    	if ( other.getValue() == this.value && other.getCurrency() == this.currency ) {
     		return true;
     	}
     	return false;
@@ -76,7 +76,7 @@ public class BankNote implements Valuable{
      * @return string representation of bank notes and currency.
      */
 	public String toString() {
-		return String.format("%.2f-%s note [%s]",this.value,this.currency,this.serialNumber);
+		return String.format( "%.2f-%s note [%s]",this.value,this.currency,this.serialNumber );
 	}
 }
 

@@ -16,11 +16,11 @@ public class CoinUtil {
 	 * @return a new List containing only the elements from valuelist
 	 *     that have the requested currency.  
 	 */
-	public static List<Valuable> filterByCurrency(final List<Valuable> valuelist, String currency) {
+	public static List<Valuable> filterByCurrency( final List<Valuable> valuelist, String currency ) {
 		List<Valuable> newlist = new ArrayList<Valuable>();
-		if (currency != null) {
-			for (Valuable value : valuelist) {
-				if (value.getCurrency().equals(currency)) newlist.add(value);
+		if ( currency != null ) {
+			for ( Valuable value : valuelist ) {
+				if ( value.getCurrency().equals(currency) ) newlist.add(value);
 			}
 		}
 		return newlist; // return a list of coin references copied from valuelist
@@ -31,7 +31,7 @@ public class CoinUtil {
 	 * On return, the list (values) will be ordered by currency.
 	 * @param values is a List of valuable objects we want to sort. 
 	 */
-	public static void sortByCurrency(List<Valuable> value) {
+	public static void sortByCurrency( List<Valuable> value ) {
 		value.sort(new CompareByCurrency());
 	}
 	
@@ -47,17 +47,18 @@ public class CoinUtil {
 	 * 
 	 * Hint: this is easy if you sort the coins by currency first. :-)
 	 */
-	public static void sumByCurrency(List<Valuable> value) {
+	public static void sumByCurrency( List<Valuable> value ) {
 		Map<String,Double> map = new HashMap<String, Double>();
 		Iterator<Valuable> iterator = value.iterator();
-		while (iterator.hasNext()) {
+		while ( iterator.hasNext() ) {
 			Valuable valuable = iterator.next();
-			if (map.containsKey(valuable.getCurrency())) {	
-				map.put(valuable.getCurrency(),map.get(valuable.getCurrency())+valuable.getValue());
-			} else map.put(valuable.getCurrency(),valuable.getValue());
+			String currency = valuable.getCurrency();
+			if ( map.containsKey(currency) ) {
+				map.put( currency,map.get(currency)+valuable.getValue() );
+			} else map.put( currency, valuable.getValue() );
 		}
-		for (String key : map.keySet()) {
-			System.out.println(map.get(key)+"-"+key);
+		for ( String key : map.keySet() ) {
+			System.out.println( map.get(key) + "-" + key );
 		}
 	}
 	
@@ -134,7 +135,7 @@ public class CoinUtil {
 	 *
 	 */
 	static class CompareByCurrency implements Comparator<Valuable> {
-		public int compare(Valuable other1 , Valuable other2) {
+		public int compare( Valuable other1 , Valuable other2 ) {
 			return other1.getCurrency().compareTo(other2.getCurrency());
 		}
 	}

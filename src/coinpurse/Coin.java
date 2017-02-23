@@ -16,8 +16,7 @@ public class Coin implements Comparable<Coin>,Valuable{
      * @param value of coin.
      */
     public Coin( double value ) {
-        this.value = value;
-        this.currency = DEFAULT_CURRENCY;
+        this(value, DEFAULT_CURRENCY);
     }
     
     /**
@@ -53,11 +52,11 @@ public class Coin implements Comparable<Coin>,Valuable{
      * or is not in the same class. 
      */
     @Override
-    public boolean equals(Object obj) {
-    	if (obj == null) return false;
-    	if (obj.getClass() != this.getClass()) return false;
+    public boolean equals( Object obj ) {
+    	if ( obj == null ) return false;
+    	if ( obj.getClass() != this.getClass() ) return false;
     	Coin other = (Coin) obj;
-    	if (other.getValue() == this.value && other.getCurrency() == this.currency) {
+    	if ( other.getValue() == this.value && other.getCurrency() == this.currency ) {
     		return true;
     	}
     	return false;
@@ -70,9 +69,9 @@ public class Coin implements Comparable<Coin>,Valuable{
      * return >0 when this value is more than other value.
      */
     @Override
-    public int compareTo(Coin other) {
-    	if (other == null) return -1;
-    	return (int) Math.signum(this.value - other.value);
+    public int compareTo( Coin other ) {
+    	if ( other == null ) return -1;
+    	return (int) Math.signum( this.value - other.value );
     }
     
     /**
@@ -80,7 +79,7 @@ public class Coin implements Comparable<Coin>,Valuable{
      * @return string representation of coins and currency.
      */
     public String toString() { 
-    	return String.format("%.2f-%s", this.value,this.currency); 
+    	return String.format( "%.2f-%s", this.value,this.currency ); 
     }
 }
 

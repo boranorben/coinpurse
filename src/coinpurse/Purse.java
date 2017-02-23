@@ -69,7 +69,7 @@ public class Purse {
      *  @return true if purse is full.
      */
     public boolean isFull() {
-    	if(this.count() == this.capacity) return true;
+    	if( this.count() == this.capacity ) return true;
         return false;
     }
 
@@ -82,15 +82,15 @@ public class Purse {
      */
     public boolean insert( Valuable value ) {
         // if the purse is already full then can't insert anything.
-    	if (!isFull() && value.getValue() > 0) {
+    	if ( !isFull() && value.getValue() > 0 ) {
     		money.add(value);
     		Collections.sort(money, new Comparator<Valuable>() {
     			@Override
-        		public int compare(Valuable other1 , Valuable other2) {
-        			return other1.getCurrency().compareTo(other2.getCurrency());
+        		public int compare( Valuable other1 , Valuable other2 ) {
+        			return other1.getCurrency().compareTo( other2.getCurrency() );
 				}
 			});
-    		Collections.reverse(money);
+    		Collections.reverse( money );
 			return true;
     	}
         return false;
@@ -106,24 +106,24 @@ public class Purse {
      */
     public Valuable[] withdraw( double amount ) {
     	List<Valuable> templist = new ArrayList<Valuable>();
-		if (amount > 0) {	
-			for (int i=0 ; i<=money.size()-1 ; i++) {
+		if ( amount > 0 ) {	
+			for ( int i=0 ; i<=money.size()-1 ; i++ ) {
 				double values = money.get(i).getValue();
-				if (values <= amount) {
+				if ( values <= amount ) {
 					amount -= values;
-					templist.add(money.get(i));
-					money.remove(money.get(i));
+					templist.add( money.get(i) );
+					money.remove( money.get(i) );
 				}
 			}
-			if (amount!=0) {
-				for (Valuable withdraw : templist) {
-					insert(withdraw);
+			if ( amount!=0 ) {
+				for ( Valuable withdraw : templist ) {
+					insert( withdraw );
 				}
 				return null;
 			}
 		}
-		Valuable[] array = new Valuable[templist.size()];
-		templist.toArray(array);
+		Valuable[] array = new Valuable[ templist.size() ];
+		templist.toArray( array );
 		return array;
 	}
   
