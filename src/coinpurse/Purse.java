@@ -3,7 +3,6 @@ package coinpurse;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  *  A purse contains coins and bank notes.
@@ -84,12 +83,7 @@ public class Purse {
         // if the purse is already full then can't insert anything.
     	if ( !isFull() && value.getValue() > 0 ) {
     		money.add(value);
-    		Collections.sort(money, new Comparator<Valuable>() {
-    			@Override
-        		public int compare( Valuable other1 , Valuable other2 ) {
-        			return other1.getCurrency().compareTo( other2.getCurrency() );
-				}
-			});
+    		Collections.sort( money );
     		Collections.reverse( money );
 			return true;
     	}
