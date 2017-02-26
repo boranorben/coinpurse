@@ -1,6 +1,7 @@
 package coinpurse;
  
 import java.util.Scanner;
+import java.util.ResourceBundle;
 
 /** 
  * User Interface for the Coin Purse. 
@@ -11,16 +12,20 @@ import java.util.Scanner;
  */
 public class ConsoleDialog {
 	// default currency for this dialog
-	public static final String CURRENCY = "Baht";
+//	public static final String CURRENCY = "Baht";
+	public String currency;
     // use a single java.util.Scanner object for reading all input
     private static Scanner console = new Scanner( System.in );
     private Purse purse;
+    private MoneyFactory factory;
     
     /** 
      * Initialize a new Purse dialog.
      * @param purse is the Purse to interact with.
+     * @param country for initialize its currency.
      */
     public ConsoleDialog(Purse purse) {
+    	factory = MoneyFactory.getInstance();
     	this.purse = purse;
     }
     
@@ -28,7 +33,8 @@ public class ConsoleDialog {
     public void run() {
         String choice = "";
         while( true ) {
-            System.out.printf("Purse contains %.2f %s\n", purse.getBalance(), CURRENCY );
+        	setCurrency();
+            System.out.printf("Purse contains %.2f %s\n", purse.getBalance(),currency);
             if ( purse.isFull() ) System.out.println("Purse is FULL.");
             // print a list of choices
             System.out.print( 
@@ -42,7 +48,7 @@ public class ConsoleDialog {
             else System.out.println( "\""+choice+"\" is not a valid choice.");
         }
         // confirm that we are quitting
-        System.out.println("Goodbye. The purse still has "+purse.getBalance()+" "+CURRENCY);
+        System.out.println("Goodbye. The purse still has "+purse.getBalance()+" "+currency);
     }
 
     /** Ask the user how many coins to deposit into purse, then deposit them.
@@ -56,11 +62,12 @@ public class ConsoleDialog {
         while( scanline.hasNextDouble() ) { 
             double value = scanline.nextDouble();
             Valuable money;
-            if (value >= 20) {
-            	money = new BankNote(value);
-            } else {
-            	money = new Coin(value);
-            }
+            try {
+            	money = factory.getInstance().createMoney( value );
+            } catch (IllegalArgumentException e) {
+				System.out.println( "Sorry, " +value+ "is not a valid amount." );
+				continue;
+			}
             System.out.printf("Deposit %s... ", money.toString() );
             boolean ok = purse.insert(money);
             System.out.println( (ok? "ok" : "FAILED") );
@@ -69,7 +76,7 @@ public class ConsoleDialog {
             System.out.println("Invalid input: "+scanline.next() );
     }
     
-    /** Ask how much money (Baht) to withdraw and then do it.
+    /** Ask how much money to withdraw and then do it.
      *  After withdraw, show the values of the coins we withdrew.
      */
     public void withdrawDialog() {
@@ -78,7 +85,7 @@ public class ConsoleDialog {
              double amount = console.nextDouble( );
              Valuable [] values = purse.withdraw(amount);
              if ( values == null ) 
-                System.out.printf("Sorry, couldn't withdraw %g %s\n", amount, CURRENCY);
+                System.out.printf("Sorry, couldn't withdraw %g %s\n", amount, currency);
              else {
                 System.out.print("You withdrew:");
                 for(int k=0; k<values.length; k++) {
@@ -90,6 +97,19 @@ public class ConsoleDialog {
         else System.out.printf("Invalid amount." );
         // discard remainder of the input line so we don't read it again
         console.nextLine();
+    }
+    
+    /**
+     * Set currency to appropriate its country.
+     */
+    public void setCurrency() {
+    	ResourceBundle bundle = ResourceBundle.getBundle( "purse" );
+    	String factoryclass = bundle.getString( "moneyfactory" );
+    	if ( factoryclass.equals("coinpurse.ThaiMoneyFactory" )) {
+    		this.currency = "Baht";
+    	} else if ( factoryclass.equals( "coinpurse.MalayMoneyFactory" )) {
+    		this.currency = "Ringgit";
+    	}
     }
 
 }

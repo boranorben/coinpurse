@@ -24,10 +24,11 @@ public class BankNote extends AbstractValuable {
      * @param currency of bank note.
      */
 	public BankNote( double value,String currency ) {
+		BankNote.nextSerialNumber++;
 		this.value = value;
 		this.currency = currency;
 		this.serialNumber = BankNote.nextSerialNumber;
-		BankNote.nextSerialNumber++;
+		
 	}
 	
 	 /**
@@ -43,7 +44,7 @@ public class BankNote extends AbstractValuable {
      * @return string representation of bank notes and currency.
      */
 	public String toString() {
-		return String.format( "%.2f-%s note [%s]",this.value,this.currency,this.serialNumber );
+		return String.format( "%.0f-%s note [%s]",this.value,this.currency,this.serialNumber );
 	}
 }
 
