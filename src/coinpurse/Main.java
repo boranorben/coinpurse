@@ -2,6 +2,9 @@ package coinpurse;
  
 import java.util.ResourceBundle;
 
+import gui.PurseBalanceObserver;
+import gui.PurseStatusObserver;
+
 /**
  * A main class to create objects and connect objects together.
  * The user interface needs a reference to coin purse.
@@ -38,6 +41,15 @@ public class Main {
     	
     	Purse purse = new Purse(CAPACITY);
     	ConsoleDialog ui = new ConsoleDialog( purse );
+    	
+    	PurseBalanceObserver balance = new PurseBalanceObserver();
+       	purse.addObserver( balance );
+    	balance.run();
+    	
+    	PurseStatusObserver status = new PurseStatusObserver();
+    	purse.addObserver( status );
+    	status.run();
+    	
     	ui.run();
     }
 }

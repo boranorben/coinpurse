@@ -1,6 +1,7 @@
 package coinpurse;
 
 import java.util.List;
+import java.util.Observable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,7 +14,7 @@ import java.util.Collections;
  *  
  *  @author Issaree Srisomboon
  */
-public class Purse {
+public class Purse extends Observable {
 	
     /** Collection of objects in the purse. */
     private List<Valuable> money;
@@ -85,6 +86,8 @@ public class Purse {
     		money.add(value);
     		Collections.sort( money );
     		Collections.reverse( money );
+    		setChanged();
+    		notifyObservers();
 			return true;
     	}
         return false;
@@ -99,26 +102,25 @@ public class Purse {
 	 *    or null if cannot withdraw requested amount.
      */
     public Valuable[] withdraw( double amount ) {
-    	List<Valuable> templist = new ArrayList<Valuable>();
-		if ( amount > 0 ) {	
-			for ( int i=0 ; i<=money.size()-1 ; i++ ) {
-				double values = money.get(i).getValue();
-				if ( values <= amount ) {
-					amount -= values;
-					templist.add( money.get(i) );
-					money.remove( money.get(i) );
-				}
-			}
-			if ( amount!=0 ) {
-				for ( Valuable withdraw : templist ) {
-					insert( withdraw );
-				}
-				return null;
-			}
-		}
-		Valuable[] array = new Valuable[ templist.size() ];
-		templist.toArray( array );
-		return array;
+    	List<Valuable> templist = new ArrayList<>();
+    	for ( int i = this.money.size()-1 ; i >= 0 ; i-- ) {
+    		Valuable value = this.money.get(i);
+    		if ( value.getValue() <= amount ) {
+    			amount -= value.getValue();
+    			templist.add( value );
+    		}
+    	}
+    	if (amount == 0) {
+    		for ( Valuable tempc : templist ) {
+    			this.money.remove(tempc);
+    		}
+    		Valuable[] array = new Valuable[ templist.size() ];
+    		templist.toArray( array );
+    		setChanged();
+    		notifyObservers();
+    		return array;
+    	}
+    	return null;
 	}
   
     /** 

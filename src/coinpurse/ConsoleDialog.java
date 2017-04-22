@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  */
 public class ConsoleDialog {
 	// default currency for this dialog
-//	public static final String CURRENCY = "Baht";
+	public static final String CURRENCY = "Baht";
 	public String currency;
     // use a single java.util.Scanner object for reading all input
     private static Scanner console = new Scanner( System.in );

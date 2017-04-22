@@ -42,7 +42,7 @@ public abstract class AbstractValuable implements Valuable{
 	public boolean equals(Object obj) {
 		if ( obj == null ) return false;
 		if ( obj.getClass() != this.getClass() ) return false;
-		Coin other = (Coin) obj;
+		Valuable other = (Valuable) obj;
 		return other.getValue() == this.getValue() && other.getCurrency() == this.getCurrency();
 	}
 
