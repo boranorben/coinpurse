@@ -1,4 +1,4 @@
-package gui;
+package coinpurse.gui;
 
 import java.util.Observable;
 import java.util.Observer;

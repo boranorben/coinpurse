@@ -1,4 +1,4 @@
-package gui;
+package coinpurse.gui;
 
 import java.awt.BorderLayout;
 import java.util.Observable;

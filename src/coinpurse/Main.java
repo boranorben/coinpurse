@@ -2,8 +2,8 @@ package coinpurse;
  
 import java.util.ResourceBundle;
 
-import gui.PurseBalanceObserver;
-import gui.PurseStatusObserver;
+import coinpurse.gui.PurseBalanceObserver;
+import coinpurse.gui.PurseStatusObserver;
 
 /**
  * A main class to create objects and connect objects together.
