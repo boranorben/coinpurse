@@ -3,6 +3,7 @@ package coinpurse;
 import java.util.ResourceBundle;
 
 import coinpurse.gui.PurseBalanceObserver;
+import coinpurse.gui.PurseListModel;
 import coinpurse.gui.PurseStatusObserver;
 
 /**
@@ -42,14 +43,17 @@ public class Main {
     	Purse purse = new Purse(CAPACITY);
     	ConsoleDialog ui = new ConsoleDialog( purse );
     	
-    	PurseBalanceObserver balance = new PurseBalanceObserver();
-       	purse.addObserver( balance );
-    	balance.run();
+//    	PurseBalanceObserver balance = new PurseBalanceObserver();
+//    	purse.addObserver( balance );
+//    	balance.run();
+//
+//    	PurseStatusObserver status = new PurseStatusObserver();
+//    	purse.addObserver( status );
+//    	status.run();
     	
-    	PurseStatusObserver status = new PurseStatusObserver();
-    	purse.addObserver( status );
-    	status.run();
-    	
+    	PurseListModel listModel = new PurseListModel(purse);
+    	purse.addObserver(listModel);
+    	listModel.run();
     	ui.run();
     }
 }

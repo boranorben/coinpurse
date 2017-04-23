@@ -87,7 +87,7 @@ public class Purse extends Observable {
     		Collections.sort( money );
     		Collections.reverse( money );
     		setChanged();
-    		notifyObservers();
+    		notifyObservers( "Insert " + value.getValue() + " " + value.getCurrency() );
 			return true;
     	}
         return false;
@@ -102,6 +102,7 @@ public class Purse extends Observable {
 	 *    or null if cannot withdraw requested amount.
      */
     public Valuable[] withdraw( double amount ) {
+    	double realAmount = amount;
     	List<Valuable> templist = new ArrayList<>();
     	for ( int i = this.money.size()-1 ; i >= 0 ; i-- ) {
     		Valuable value = this.money.get(i);
@@ -117,10 +118,18 @@ public class Purse extends Observable {
     		Valuable[] array = new Valuable[ templist.size() ];
     		templist.toArray( array );
     		setChanged();
-    		notifyObservers();
+    		notifyObservers( "Withdraw " + realAmount + " Baht");
     		return array;
     	}
     	return null;
+	}
+    
+	/**
+	 * Returns an immutable list view of the Purse contents.
+	 * @return a view of the Purse's list.
+	 */
+	public List<Valuable> getImmutableList() {
+		return Collections.unmodifiableList(money);
 	}
   
     /** 
