@@ -2,7 +2,12 @@ package coinpurse;
 
 import java.util.List;
 import java.util.Observable;
+
+import coinpurse.strategy.RecursiveWithdraw;
+import coinpurse.strategy.WithdrawStrategy;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -23,6 +28,7 @@ public class Purse extends Observable {
      *  Capacity is set when the purse is created and cannot be changed.
      */
     private final int capacity;
+    private WithdrawStrategy strategy;
     
     /** 
      *  Create a purse with a specified capacity.
@@ -31,6 +37,7 @@ public class Purse extends Observable {
     public Purse( int capacity ) {
     	this.capacity = capacity;
     	this.money = new ArrayList<Valuable>();
+   
     }
 
     /**
@@ -102,26 +109,19 @@ public class Purse extends Observable {
 	 *    or null if cannot withdraw requested amount.
      */
     public Valuable[] withdraw( double amount ) {
-    	double realAmount = amount;
-    	List<Valuable> templist = new ArrayList<>();
-    	for ( int i = this.money.size()-1 ; i >= 0 ; i-- ) {
-    		Valuable value = this.money.get(i);
-    		if ( value.getValue() <= amount ) {
-    			amount -= value.getValue();
-    			templist.add( value );
+//    	double realAmount = amount;
+       	List<Valuable> templist = new ArrayList<>();
+       	templist = strategy.withdraw( amount, this.money );
+       	if ( templist != null ) {
+        	Valuable[] array = new Valuable[ templist.size() ];
+        	for ( Valuable tempc : templist ) {
+    			money.remove( tempc );
     		}
-    	}
-    	if (amount == 0) {
-    		for ( Valuable tempc : templist ) {
-    			this.money.remove(tempc);
-    		}
-    		Valuable[] array = new Valuable[ templist.size() ];
-    		templist.toArray( array );
-    		setChanged();
-    		notifyObservers( "Withdraw " + realAmount + " Baht");
-    		return array;
-    	}
-    	return null;
+        	templist.toArray( array );
+//    		setChanged();
+//    		notifyObservers( "Withdraw " + realAmount + " Baht");
+        	return array;
+       	} return null;
 	}
     
 	/**
@@ -138,6 +138,14 @@ public class Purse extends Observable {
      */
     public String toString() {
     	return String.format("%d coins with value %.1f",this.count(),getBalance());
+    }
+    
+    /**
+     * Specify the withdraw strategy at run-time.
+     * @param withdrawStrategy is an algorithm for withdrawing the money
+     */
+    public void setWithdrawStrategy( WithdrawStrategy withdrawStrategy ) {
+    	this.strategy = withdrawStrategy;
     }
     
 }
