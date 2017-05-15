@@ -1,6 +1,8 @@
 package coinpurse;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Some Coin utility methods for practice using Lists and Comparator.
@@ -16,12 +18,11 @@ public class CoinUtil {
 	 * @return a new List containing only the elements from valuelist
 	 *     that have the requested currency.  
 	 */
-	public static List<Valuable> filterByCurrency( final List<Valuable> valuelist, String currency ) {
-		List<Valuable> newlist = new ArrayList<Valuable>();
+	public static List<? extends Valuable> filterByCurrency( final List<? extends Valuable> valuelist, String currency ) {
+		List<? extends Valuable> newlist = new ArrayList<>();
+		Predicate<Valuable> predicate = (x) -> ( x.getCurrency().equals(currency) );
 		if ( currency != null ) {
-			for ( Valuable value : valuelist ) {
-				if ( value.getCurrency().equals(currency) ) newlist.add(value);
-			}
+			newlist = valuelist.stream().filter( predicate ).collect( Collectors.toList() );
 		}
 		return newlist; // return a list of coin references copied from valuelist
 	}
@@ -31,8 +32,8 @@ public class CoinUtil {
 	 * On return, the list (values) will be ordered by currency.
 	 * @param values is a List of valuable objects we want to sort. 
 	 */
-	public static void sortByCurrency( List<Valuable> value ) {
-		value.sort(new CompareByCurrency());
+	public static void sortByCurrency( List<? extends Valuable> money ) {
+		money.sort(new CompareByCurrency());
 	}
 	
 	/**
@@ -72,7 +73,7 @@ public class CoinUtil {
 		List<Valuable> coins = makeInternationalCoins();
 		int size = coins.size();
 		System.out.print(" INPUT: "); printList(coins," ");
-		List<Valuable> rupees = filterByCurrency(coins, currency);
+		List<? extends Valuable> rupees = filterByCurrency(coins, currency);
 		System.out.print("RESULT: "); printList(rupees," ");
 		if (coins.size() != size) System.out.println("Error: you changed the original list.");
 		
@@ -87,6 +88,10 @@ public class CoinUtil {
 		System.out.print("coins= "); printList(coins," ");
 		sumByCurrency(coins);
 		
+		String m = CoinUtil.max( "canary", "dog" );
+		System.out.println( "max is " + m );
+		Coin c = CoinUtil.max( new Coin(5), new Coin(10) );
+		System.out.println( c );
 	}
 	
 	/**
@@ -139,4 +144,16 @@ public class CoinUtil {
 			return other1.getCurrency().compareTo(other2.getCurrency());
 		}
 	}
+	
+	/**
+	 * Return the larger of a and b, according to the natural ordering (defined by comparaTo).
+	 * @param a
+	 * @param b
+	 * @return the larger of a and b, according to the natural ordering
+	 */
+	public static <E extends Comparable<? super E>> E max( E a, E b) {
+		if ( a.compareTo(b) > 1 ) return a;
+		return b;
+	}
+
 }

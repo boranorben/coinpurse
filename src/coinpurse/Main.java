@@ -55,21 +55,21 @@ public class Main {
 //    	purse.addObserver( status );
 //    	status.run();
 //    	
-//    	PurseListModel listModel = new PurseListModel(purse);
-//    	purse.addObserver(listModel);
-//    	listModel.run();
+    	PurseListModel listModel = new PurseListModel(purse);
+    	purse.addObserver(listModel);
+    	listModel.run();
 //    	
 //    	PurseTransactionsObserver transactions = new PurseTransactionsObserver();
 //    	purse.addObserver(transactions);
 //    	transactions.run();
-// 	
+ 	
     	WithdrawStrategy gWithdraw = new GreedyWithdraw();
     	purse.setWithdrawStrategy(gWithdraw);
     	
 //    	WithdrawStrategy rWithdraw = new RecursiveWithdraw();
 //    	purse.setWithdrawStrategy( rWithdraw );
     	
-    	ui.run();
+   	ui.run();
     }
 }
 

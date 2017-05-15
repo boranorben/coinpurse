@@ -37,7 +37,6 @@ public class Purse extends Observable {
     public Purse( int capacity ) {
     	this.capacity = capacity;
     	this.money = new ArrayList<Valuable>();
-   
     }
 
     /**
@@ -109,7 +108,7 @@ public class Purse extends Observable {
 	 *    or null if cannot withdraw requested amount.
      */
     public Valuable[] withdraw( double amount ) {
-//    	double realAmount = amount;
+    	double realAmount = amount;
        	List<Valuable> templist = new ArrayList<>();
        	templist = strategy.withdraw( amount, this.money );
        	if ( templist != null ) {
@@ -118,8 +117,8 @@ public class Purse extends Observable {
     			money.remove( tempc );
     		}
         	templist.toArray( array );
-//    		setChanged();
-//    		notifyObservers( "Withdraw " + realAmount + " Baht");
+    		setChanged();
+    		notifyObservers( "Withdraw " + realAmount + " Baht");
         	return array;
        	} return null;
 	}
