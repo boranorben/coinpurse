@@ -63,7 +63,7 @@ public class PurseListModel extends AbstractListModel<Valuable> implements Obser
 	/** Update receives notification from the purse. */
 	@Override
 	public void update(Observable subject, Object info) {
-		fireContentsChanged( this , 0 , getSize()-1 );
+		fireContentsChanged( info , 0 , getSize()-1 );
 		listview.setModel(this);
 	}
 
